@@ -1,13 +1,21 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-class Category(Models.model):
+
+class Category(models.Model):
     name = models.CharField("名称",max_length=50)
-    slug = models.SlugField("Slug",max_length=50,unique=True,help_text='根据name生成的,用于生成页面的url必须唯一')
+    slug = models.SlugField(
+        "Slug",max_length=50,
+        unique=True,
+        help_text='根据name生成的,用于生成页面的url必须唯一')
     description = models.TextField("描述")
     is_active = models.BooleanField("是否激活",default=True)
-    meta_keywords = models.CharField("Meta 关键词",max_length=255,help_text='有利于SEO,逗号隔开')
-    meta_description = models.CharField("Meta 描述",max_length=255,help_text='meta描述')
+    meta_keywords = models.CharField(
+        "Meta 关键词",max_length=255,
+        help_text='有利于SEO,逗号隔开')
+    meta_description = models.CharField(
+        "Meta 描述",max_length=255,
+        help_text='meta描述')
     created_at = models.DateTimeField("创建时间",auto_now_add=True)
     updated_at = models.DateTimeField("更新时间",auto_now=True)
 
@@ -22,7 +30,7 @@ class Category(Models.model):
     def get_absolute_url(self):
         return reverse('catalog_category',args=(self.slug,))
 
-class Product(Models.model):
+class Product(models.Model):
     name = models.CharField("名称",max_length=255,unique=True)
     slug = models.SlugField("Slug",max_length=255,unique=True,help_text='根据name生成,用于生成页面的URL,必须唯一')
     brand = models.CharField("品牌",max_length=50)
